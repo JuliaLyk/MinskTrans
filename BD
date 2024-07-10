@@ -1,0 +1,152 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL UNIQUE,
+    full_name TEXT NOT NULL,
+    organization TEXT NOT NULL
+);
+
+drop table users;
+drop table routes;
+drop table schedule;
+select * from users;
+INSERT INTO users (tab_num, full_name, organization) VALUES (12345678, 'Иванов Иван Иванович', 'Организация 1');
+INSERT INTO users (tab_num, full_name, organization) VALUES (87654321, 'Петров Петр Петрович', 'Организация 2');
+INSERT INTO users (tab_num, full_name, organization) VALUES (11223344, 'Сидоров Сидор Сидорович', 'Организация 3');
+
+SELECT * FROM routes WHERE tab_num = 12345678 AND date = '2024-07-01';
+
+CREATE TABLE schedule (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    shift TEXT NOT NULL,
+    FOREIGN KEY(tab_num) REFERENCES users(tab_num)
+);
+
+INSERT INTO schedule (tab_num, date, shift) VALUES (12345678, '2024-07-01', 'Дневная смена');
+INSERT INTO schedule (tab_num, date, shift) VALUES (12345678, '2024-07-02', 'Ночная смена');
+INSERT INTO schedule (tab_num, date, shift) VALUES (12345678, '2024-07-03', 'Выходной');
+INSERT INTO schedule (tab_num, date, shift) VALUES (87654321, '2024-07-01', 'Дневная смена');
+INSERT INTO schedule (tab_num, date, shift) VALUES (87654321, '2024-07-02', 'Ночная смена');
+INSERT INTO schedule (tab_num, date, shift) VALUES (87654321, '2024-07-03', 'Выходной');
+select * from schedule
+SELECT * FROM schedule WHERE tab_num = 12345678;
+
+
+CREATE TABLE IF NOT EXISTS routes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    route TEXT NOT NULL,
+    departure TEXT NOT NULL,
+    arrival TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    breaks TEXT NOT NULL,
+    FOREIGN KEY(tab_num) REFERENCES users(tab_num)
+);
+
+-- Заполнение таблицы routes
+INSERT INTO routes (tab_num, date, route, departure, arrival, duration, breaks) VALUES
+(12345678, '2024-07-01', 'ВЕЛИКОЕ СЕЛО', '05:51', '18:58', '9 ч. 42 мин.', '08:27 - 10:50 (143 мин.), 15:51 - 16:29 (38 мин.)'),
+(12345678, '2024-07-02', 'НОВОЕ СЕЛО', '06:00', '19:00', '10 ч.', '09:00 - 10:00 (60 мин.)'),
+(87654321, '2024-07-01', 'СТАРОЕ СЕЛО', '07:00', '20:00', '10 ч.', '10:00 - 11:00 (60 мин.)');
+select * from routes
+
+
+-- Проверка данных в таблице users
+SELECT * FROM users;
+
+-- Проверка данных в таблице schedule
+SELECT * FROM schedule;
+
+-- Проверка данных в таблице routes
+SELECT * FROM routes;
+
+-- Проверка связей между таблицами
+SELECT users.tab_num, users.full_name, schedule.date, schedule.shift
+FROM users
+JOIN schedule ON users.tab_num = schedule.tab_num;
+
+SELECT users.tab_num, users.full_name, routes.date, routes.route, routes.departure, routes.arrival, routes.duration, routes.breaks
+FROM users
+JOIN routes ON users.tab_num = routes.tab_num;
+
+
+
+
+
+
+
+
+-- Создание таблицы пользователей (users)
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL UNIQUE,
+    full_name TEXT NOT NULL,
+    organization TEXT NOT NULL
+);
+
+-- Вставка данных в таблицу пользователей
+INSERT INTO users (tab_num, full_name, organization) VALUES 
+(12345678, 'Иванов Иван Иванович', 'Организация 1'),
+(87654321, 'Петров Петр Петрович', 'Организация 2'),
+(11223344, 'Сидоров Сидор Сидорович', 'Организация 3');
+
+-- Создание таблицы расписания (schedule)
+CREATE TABLE IF NOT EXISTS schedule (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    shift TEXT NOT NULL,
+    FOREIGN KEY(tab_num) REFERENCES users(tab_num)
+);
+
+-- Вставка данных в таблицу расписания
+INSERT INTO schedule (tab_num, date, shift) VALUES 
+(12345678, '2024-07-01', 'Дневная смена'),
+(12345678, '2024-07-02', 'Ночная смена'),
+(12345678, '2024-07-03', 'Выходной'),
+(87654321, '2024-07-01', 'Дневная смена'),
+(87654321, '2024-07-02', 'Ночная смена'),
+(87654321, '2024-07-03', 'Выходной');
+
+-- Создание таблицы маршрутов (routes)
+CREATE TABLE IF NOT EXISTS routes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tab_num INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    route TEXT NOT NULL,
+    departure TEXT NOT NULL,
+    arrival TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    breaks TEXT NOT NULL,
+    FOREIGN KEY(tab_num) REFERENCES users(tab_num)
+);
+
+-- Вставка данных в таблицу маршрутов
+INSERT INTO routes (tab_num, date, route, departure, arrival, duration, breaks) VALUES
+(12345678, '2024-07-01', 'ВЕЛИКОЕ СЕЛО', '05:51', '18:58', '9 ч. 42 мин.', '08:27 - 10:50 (143 мин.), 15:51 - 16:29 (38 мин.)'),
+(12345678, '2024-07-02', 'НОВОЕ СЕЛО', '06:00', '19:00', '10 ч.', '09:00 - 10:00 (60 мин.)'),
+(87654321, '2024-07-01', 'СТАРОЕ СЕЛО', '07:00', '20:00', '10 ч.', '10:00 - 11:00 (60 мин.)');
+
+-- Проверка данных в таблице пользователей
+SELECT * FROM users;
+
+-- Проверка данных в таблице расписания
+SELECT * FROM schedule;
+
+-- Проверка данных в таблице маршрутов
+SELECT * FROM routes;
+
+-- Проверка связей между таблицами
+SELECT users.tab_num, users.full_name, schedule.date, schedule.shift
+FROM users
+JOIN schedule ON users.tab_num = schedule.tab_num;
+
+SELECT users.tab_num, users.full_name, routes.date, routes.route, routes.departure, routes.arrival, routes.duration, routes.breaks
+FROM users
+JOIN routes ON users.tab_num = routes.tab_num;
+
+SELECT route, departure, arrival, duration, breaks
+FROM routes
+WHERE tab_num = 12345678 AND date = '2024-07-01';

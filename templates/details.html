@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали маршрута</title>
+</head>
+<body>
+    <h1>Детали маршрута для {{.TabNum}}</h1>
+    <p>Маршрут: {{.Route}}</p>
+    <p>Время отправления: {{.Departure}}</p>
+    <p>Время прибытия: {{.Arrival}}</p>
+    <p>Продолжительность: {{.Duration}}</p>
+    <p>Перерывы: {{range .Breaks}}<br>{{.}}{{end}}</p>
+    <a href="/calendar?tabNum={{.TabNum}}">Назад к календарю</a>
+</body>
+</html>

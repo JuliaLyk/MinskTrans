@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .shift {
+            background-color: #00BFFF;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Календарь водителя: {{.FullName}}</h1>
+    <h2>Организация: {{.Organization}}</h2>
+    <h2>Табельный номер: {{.TabNum}}</h2>
+    <h2>Июль 2024</h2>
+    <table>
+        <tr>
+            <th>пн</th>
+            <th>вт</th>
+            <th>ср</th>
+            <th>чт</th>
+            <th>пт</th>
+            <th>сб</th>
+            <th>вс</th>
+        </tr>
+        <!-- July 2024 Calendar -->
+        <tr>
+            <!-- Пустая ячейка, потому что 1 июля начинается с понедельника -->
+            
+            <td class="shift" data-date="2024-07-01">1</td>
+            <td class="shift" data-date="2024-07-02">2</td>
+            <td class="shift" data-date="2024-07-03">3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td class="shift" data-date="2024-07-07">7</td>
+            <td class="shift" data-date="2024-07-08">8</td>
+            <td class="shift" data-date="2024-07-09">9</td>
+            <td class="shift" data-date="2024-07-10">10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td class="shift" data-date="2024-07-14">14</td>
+            <td class="shift" data-date="2024-07-15">15</td>
+            <td class="shift" data-date="2024-07-16">16</td>
+            <td class="shift" data-date="2024-07-17">17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td class="shift" data-date="2024-07-21">21</td>
+            <td class="shift" data-date="2024-07-22">22</td>
+            <td class="shift" data-date="2024-07-23">23</td>
+            <td class="shift" data-date="2024-07-24">24</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+        </tr>
+        <tr>
+            <td class="shift" data-date="2024-07-28">28</td>
+            <td class="shift" data-date="2024-07-29">29</td>
+            <td class="shift" data-date="2024-07-30">30</td>
+            <td class="shift" data-date="2024-07-31">31</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <a href="/">На главную</a>
+    <script>
+        document.querySelectorAll('.shift').forEach(item => {
+            item.addEventListener('click', event => {
+                const date = event.target.getAttribute('data-date');
+                const tabNum = "{{.TabNum}}";
+                window.location.href = '/details?date=' + date + '&tabNum=' + tabNum;
+            });
+        });
+    </script>
+</body>
+</html>
+
